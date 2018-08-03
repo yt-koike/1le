@@ -60,14 +60,19 @@ printf("%d:%s\n",i,txt->line[i]);
 return;
 }
 
-void insert(text *txt,char *str,int at){
+int insert(text *txt,char *str,int at){//at=-1:at the end ,otherwise at var"at"
 if(DEBUG)printf("insert:%s at %d\n",str,at);
 if(at<0){
 at=txt->linesize;
 txt->linesize++;
+}else{
+if(at+1>LINE_SIZE)return -1;
+int i;
+for(i=txt->linesize;i>at;i--)
+memcpy(txt->line[i+1],txt->line[i],LEN_SIZE);
 }
 memcpy(txt->line[at],str,LEN_SIZE);
-return;
+return 0;
 }
 
 void editline(text *txt){
@@ -80,7 +85,7 @@ return;
 }
 char editinput[LEN_SIZE];
 in(editinput);
-insert(txt,editinput,d);
+memcpy(txt->line[d],editinput,LEN_SIZE);
 return;
 }
 
@@ -89,6 +94,10 @@ int d;
 printf("del");
 scanf("%d",&d);
 insert(txt,"\0",d);
+int i;
+for(i=d;i<txt->linesize;i++){
+memcpy(txt->line[i],txt->line[i+1],LEN_SIZE);
+}
 txt->linesize--;
 return;
 }
