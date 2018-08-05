@@ -3,6 +3,7 @@
 #define DEBUG 0
 #define LEN_SIZE 128
 #define LINE_SIZE 256
+#define FILENAME_SIZE 30
 
 typedef struct{
 char line[LINE_SIZE][LEN_SIZE];
@@ -44,13 +45,14 @@ fclose(fpr);
 return 0;
 }
 
-void savetext(text *txt){
-FILE *fp=fopen("result.txt","w");
+int savetext(text *txt,char* filename){
+FILE *fpw=fopen(filename,"w");
+if(!fpw)return -1;
 int i;
 for(i=0;i<=txt->linesize;i++)
-fprintf(fp,"%s\n",txt->line[i]);
-fclose(fp);
-return;
+fprintf(fpw,"%s\n",txt->line[i]);
+fclose(fpw);
+return 0;
 }
 
 void showtext(text *txt){
@@ -68,24 +70,21 @@ txt->linesize++;
 }else{
 if(at+1>LINE_SIZE)return -1;
 int i;
-for(i=txt->linesize;i>at;i--)
+for(i=txt->linesize;i>=at;i--)
 memcpy(txt->line[i+1],txt->line[i],LEN_SIZE);
 }
 memcpy(txt->line[at],str,LEN_SIZE);
 return 0;
 }
 
-void editline(text *txt){
-printf("edit");
-int d;
-scanf("%d",&d);
-if(d<0||LINE_SIZE<=d){
+void editline(text *txt,int at){
+if(at<0||LINE_SIZE<=at){
 printf("out of range");
 return;
 }
 char editinput[LEN_SIZE];
 in(editinput);
-memcpy(txt->line[d],editinput,LEN_SIZE);
+memcpy(txt->line[at],editinput,LEN_SIZE);
 return;
 }
 
@@ -102,15 +101,44 @@ txt->linesize--;
 return;
 }
 
+//*UIs*//
+void insertUI(text *txt){
+showtext(txt);
+printf("insert at:");
+int at;
+scanf("%d",&at);
+//printf("How many lines:");
+int i;
+//scanf("%d",&i);
+//while(i-->0){
+insert(txt,"\0",at);
+editline(txt,at);
+//}
+return;
+}
+
+void editUI(text *txt){
+printf("edit at:");
+int at;
+scanf("%d",&at);
+editline(txt,at);
+return;
+}
+
 int main(int argc,char *argv[]){
 text txt;
 inittext(&txt);
-if(argc==2)loadtext(&txt,argv[1]);
+char filename[FILENAME_SIZE]="result.txt";
+if(argc==2){
+memcpy(filename,argv[1],FILENAME_SIZE);
+}
+printf("%s on edit\n",filename);
+loadtext(&txt,argv[1]);
 char input[LEN_SIZE];
 printf("@h help\n");
 
 while(1){
-printf("$");
+printf("1le$");
 in(input);
 if(DEBUG)printf("START %c\n",input[0]);
 
@@ -126,21 +154,30 @@ if(input[0]=='@'){
  break;
 
  case'e':
- editline(&txt);
+ editUI(&txt);
  break;
 
  case'h':
  showhelp();
  break;
 
+ case'i':
+ insertUI(&txt);
+ break;
+ 
  case'p':
  showtext(&txt);
  break;
 
  case'q':
  case'x':
- savetext(&txt);
+ savetext(&txt,filename);
  return 0;
+ break;
+
+ case's':
+ savetext(&txt,filename);
+ printf("\nSaved\n");
  break;
 
  default:
