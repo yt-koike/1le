@@ -3,6 +3,7 @@
 #define DEBUG 0
 #define LEN_SIZE 128
 #define LINE_SIZE 256
+#define FILENAME_SIZE 30
 
 typedef struct{
 char line[LINE_SIZE][LEN_SIZE];
@@ -44,13 +45,14 @@ fclose(fpr);
 return 0;
 }
 
-void savetext(text *txt){
-FILE *fp=fopen("result.txt","w");
+int savetext(text *txt,char* filename){
+FILE *fpw=fopen("result.txt","w");
+if(!fpw)return -1;
 int i;
 for(i=0;i<=txt->linesize;i++)
 fprintf(fp,"%s\n",txt->line[i]);
 fclose(fp);
-return;
+return 0;
 }
 
 void showtext(text *txt){
@@ -120,7 +122,12 @@ return;
 int main(int argc,char *argv[]){
 text txt;
 inittext(&txt);
-if(argc==2)loadtext(&txt,argv[1]);
+char filename[FILENAME_SIZE]="result.txt";
+if(argc==2){
+memcpy(filename,argc[1],FILENAME_SIZE);
+}
+
+loadtext(&txt,argv[1]);
 char input[LEN_SIZE];
 printf("@h help\n");
 
@@ -158,7 +165,7 @@ if(input[0]=='@'){
 
  case'q':
  case'x':
- savetext(&txt);
+ savetext(&txt,filename);
  return 0;
  break;
 
