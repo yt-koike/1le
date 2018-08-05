@@ -102,6 +102,21 @@ txt->linesize--;
 return;
 }
 
+//*UIs*//
+void insertUI(text *txt){
+printf("insert at:");
+int at;
+scanf("%d",&at);
+printf("How many lines:");
+int i;
+scanf("%d",&i);
+while(i-->0){
+insert(txt,"\0",at);
+editline(txt,at);
+}
+return;
+}
+
 int main(int argc,char *argv[]){
 text txt;
 inittext(&txt);
@@ -133,6 +148,10 @@ if(input[0]=='@'){
  showhelp();
  break;
 
+ case'i':
+ insertUI(&txt);
+ break;
+ 
  case'p':
  showtext(&txt);
  break;
