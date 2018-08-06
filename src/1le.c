@@ -9,7 +9,20 @@ typedef struct{
 char line[LINE_SIZE][LEN_SIZE];
 int linesize;
 }text;
-
+/*
+int strlen(char* str){
+int i=0;
+while(str[i]!='\0')i++;
+return 0;
+}
+void memcpy(char* dst,char* ori,int size){
+if(size<=0)return;
+while(size-->0){
+dst[size]=ori[size];
+}
+return;
+}
+*/
 int in(char* input){
 do{
 gets(input);
@@ -20,6 +33,7 @@ return strlen(input);
 
 void showhelp(){
 printf("@- del\n@e edit\n@p map\n@q or @x save and exit");
+printf("\n@i insert\n");
 return;
 }
 
@@ -40,7 +54,7 @@ if(i>=LINE_SIZE)return -1;
 txt->line[i][strlen(txt->line[i])-1]='\0';
 i++;
 }
-txt->linesize=i;
+txt->linesize=i-1;
 fclose(fpr);
 return 0;
 }
@@ -125,6 +139,13 @@ printf("%s\n",txt->line[at]);
 editline(txt,at);
 return;
 }
+void exitUI(char* filename){
+printf("Do you save?");
+char saveconfirm;
+scanf("%c",&saveconfirm);
+if(saveconfirm=='y')savefile(txt,filename);
+return;
+}
 
 int main(int argc,char *argv[]){
 text txt;
@@ -172,7 +193,7 @@ if(input[0]=='@'){
 
  case'q':
  case'x':
- savetext(&txt,filename);
+ exitUI(filename);
  return 0;
  break;
 
@@ -190,7 +211,5 @@ if(input[0]=='@'){
 }
 return 0;
 }
-
-
 
 
