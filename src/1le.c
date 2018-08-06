@@ -64,9 +64,9 @@ return;
 
 int insert(text *txt,char *str,int at){//at=-1:at the end ,otherwise at var"at"
 if(DEBUG)printf("insert:%s at %d\n",str,at);
-if(at<0){
-at=txt->linesize;
 txt->linesize++;
+if(at<0){
+at=txt->linesize-1;
 }else{
 if(at+1>LINE_SIZE)return -1;
 int i;
@@ -92,7 +92,7 @@ void delline(text *txt){
 int d;
 printf("del");
 scanf("%d",&d);
-insert(txt,"\0",d);
+//insert(txt,"\0",d);
 int i;
 for(i=d;i<txt->linesize;i++){
 memcpy(txt->line[i],txt->line[i+1],LEN_SIZE);
@@ -107,13 +107,13 @@ showtext(txt);
 printf("insert at:");
 int at;
 scanf("%d",&at);
-//printf("How many lines:");
+printf("How many lines:");
 int i;
-//scanf("%d",&i);
-//while(i-->0){
+scanf("%d",&i);
+while(i-->0){
 insert(txt,"\0",at);
 editline(txt,at);
-//}
+at++;}
 return;
 }
 
@@ -121,6 +121,7 @@ void editUI(text *txt){
 printf("edit at:");
 int at;
 scanf("%d",&at);
+printf("%s\n",txt->line[at]);
 editline(txt,at);
 return;
 }
@@ -189,4 +190,7 @@ if(input[0]=='@'){
 }
 return 0;
 }
+
+
+
 
