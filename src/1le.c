@@ -150,12 +150,12 @@ editline(txt,at);
 return;
 }
 
-void exitUI(char* filename){
+int saveConfirm(){
 printf("Do you save?");
 char saveconfirm;
 scanf("%c",&saveconfirm);
-if(saveconfirm=='y')savetext(txt,filename);
-return;
+if(saveconfirm=='Y'||saveconfirm=='y')return 1;
+return 0;
 }
 
 int main(int argc,char *argv[]){
@@ -205,7 +205,8 @@ if(input[0]=='@'){
 
  case'q':
  case'x':
- exitUI(filename);
+ if(saveConfirm())
+  savetext(&txt,filename);
  return 0;
  break;
 
