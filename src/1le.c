@@ -32,7 +32,7 @@ return strlen(input);
 }
 
 void showhelp(){
-printf("@- del\n@e edit\n@p map\n@q or @x save and exit");
+printf("@- del\n@e edit\n@p map\n@q or @x save and exit\n@i insert\n");
 printf("\n@i insert\n");
 return;
 }
@@ -69,12 +69,22 @@ fclose(fpw);
 return 0;
 }
 
+void intro(){
+ printf("##  #   ###\n");
+ printf(" #  #   #  \n");
+ printf(" #  #   ###\n");
+ printf(" #  #   #  \n");
+ printf("### ### ###\n"); 
+ return;
+}
+
 void showtext(text *txt){
 int i;
 for(i=0;i<txt->linesize;i++)
 printf("%d:%s\n",i,txt->line[i]);
 return;
 }
+
 
 int insert(text *txt,char *str,int at){//at=-1:at the end ,otherwise at var"at"
 if(DEBUG)printf("insert:%s at %d\n",str,at);
@@ -148,6 +158,7 @@ return;
 }
 
 int main(int argc,char *argv[]){
+intro();//introduce
 text txt;
 inittext(&txt);
 char filename[FILENAME_SIZE]="result.txt";
