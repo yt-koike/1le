@@ -139,11 +139,12 @@ printf("%s\n",txt->line[at]);
 editline(txt,at);
 return;
 }
+
 void exitUI(char* filename){
 printf("Do you save?");
 char saveconfirm;
 scanf("%c",&saveconfirm);
-if(saveconfirm=='y')savefile(txt,filename);
+if(saveconfirm=='y')savetext(txt,filename);
 return;
 }
 
