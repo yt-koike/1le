@@ -25,7 +25,7 @@ return;
 */
 int in(char* input){
 do{
-gets(input);
+fgets(input,LEN_SIZE,stdin);
 //if(strlen(input)<=0)printf("NULL string!\n");
 }while(strlen(input)<=0);
 return strlen(input);
