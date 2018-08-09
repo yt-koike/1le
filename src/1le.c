@@ -33,7 +33,6 @@ return strlen(input);
 
 void showhelp(){
 printf("@- del\n@e edit\n@p map\n@q or @x save and exit\n@i insert\n");
-printf("\n@i insert\n");
 return;
 }
 
