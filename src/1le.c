@@ -150,7 +150,7 @@ return;
 }
 
 int saveConfirm(){
-printf("Do you save?");
+printf("Do you save?(Y/n)");
 char saveconfirm;
 scanf("%c",&saveconfirm);
 if(saveconfirm=='Y'||saveconfirm=='y')return 1;
