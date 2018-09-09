@@ -4,6 +4,7 @@
 #define LEN_SIZE 128
 #define LINE_SIZE 256
 #define FILENAME_SIZE 30
+#define COLOR 0
 
 typedef struct{
 char line[LINE_SIZE][LEN_SIZE];
@@ -70,11 +71,11 @@ return 0;
 }
 
 void intro(){
- printf("-#  |   #--\n");
+ printf("--  |   ---\n");
  printf(" |  |   |  \n");
- printf(" |  |   #--\n");
+ printf(" |  |   ---\n");
  printf(" |  |   |  \n");
- printf("-#- #-- #--\n"); 
+ printf("--- --- ---\n"); 
  return;
 }
 
@@ -82,6 +83,22 @@ void showtext(text *txt){
 int i;
 for(i=0;i<txt->linesize;i++)
 printf("%d:%s\n",i,txt->line[i]);
+return;
+}
+
+void showaround(text *txt,int at,int n){
+int i;
+for(i=at-n;i<=at+n;i++){
+	if(i>0&&i<txt->linesize){
+		if(i==at){
+		if(COLOR)printf("\x1b[47m");
+		printf("%d:%s\n",i,txt->line[i]);
+		if(COLOR)printf("\x1b[49m");
+		}else{
+		printf("%d:%s\n",i,txt->line[i]);
+		}
+	}
+}
 return;
 }
 
@@ -107,8 +124,9 @@ printf("out of range");
 return;
 }
 char editinput[LEN_SIZE];
-in(editinput);
+while(in(editinput)==0);
 memcpy(txt->line[at],editinput,LEN_SIZE);
+
 return;
 }
 
@@ -123,6 +141,10 @@ memcpy(txt->line[i],txt->line[i+1],LEN_SIZE);
 }
 txt->linesize--;
 return;
+}
+
+int search(text *txt,char * str){
+
 }
 
 //*UIs*//
@@ -145,7 +167,7 @@ void editUI(text *txt){
 printf("edit at:");
 int at;
 scanf("%d",&at);
-printf("%s\n",txt->line[at]);
+showaround(txt,at,2);
 editline(txt,at);
 return;
 }
