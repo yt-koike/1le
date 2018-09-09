@@ -28,6 +28,7 @@ do{
 fgets(input,LEN_SIZE,stdin);
 //if(strlen(input)<=0)printf("NULL string!\n");
 }while(strlen(input)<=0);
+input[strlen(input)-1]='\0';
 return strlen(input);
 }
 
@@ -69,11 +70,11 @@ return 0;
 }
 
 void intro(){
- printf("##  #   ###\n");
- printf(" #  #   #  \n");
- printf(" #  #   ###\n");
- printf(" #  #   #  \n");
- printf("### ### ###\n"); 
+ printf("-#  |   #--\n");
+ printf(" |  |   |  \n");
+ printf(" |  |   #--\n");
+ printf(" |  |   |  \n");
+ printf("-#- #-- #--\n"); 
  return;
 }
 
@@ -175,10 +176,6 @@ printf("1le$");
 in(input);
 if(DEBUG)printf("START %c\n",input[0]);
 
-if(input[0]!='@'){
-insert(&txt,input,-1);
-}
-
 if(input[0]=='@'){
  switch(input[1]){
  case'-':
@@ -218,8 +215,9 @@ if(input[0]=='@'){
  printf("Error\n");
  break;
  }
+}else{
+insert(&txt,input,-1);
 }
-
 }
 return 0;
 }
