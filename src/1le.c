@@ -6,6 +6,7 @@
 #define FILENAME_SIZE 30
 #define COLOR 0
 
+int showaround_active=1;
 typedef struct{
 char line[LINE_SIZE][LEN_SIZE];
 int linesize;
@@ -87,6 +88,7 @@ return;
 }
 
 void showaround(text *txt,int at,int n){
+if(showaround_active==1){
 int i;
 for(i=at-n;i<=at+n;i++){
 	if(i>0&&i<txt->linesize){
@@ -98,6 +100,9 @@ for(i=at-n;i<=at+n;i++){
 		printf("%d:%s\n",i,txt->line[i]);
 		}
 	}
+}
+}else{
+printf("%d:%s\n",at,txt->line[at]);
 }
 return;
 }
@@ -175,9 +180,11 @@ return;
 int saveConfirm(){
 printf("Do you save?(Y/n)");
 char saveconfirm;
+while(1){
 scanf("%c",&saveconfirm);
 if(saveconfirm=='Y'||saveconfirm=='y')return 1;
-return 0;
+if(saveconfirm=='N'||saveconfirm=='n')return 0;
+}
 }
 
 int main(int argc,char *argv[]){
@@ -243,5 +250,6 @@ insert(&txt,input,-1);
 }
 return 0;
 }
+
 
 
