@@ -4,6 +4,7 @@
 #define LEN_SIZE 128
 #define LINE_SIZE 256
 #define FILENAME_SIZE 30
+#define TOOL_HEADER '-'
 
 typedef struct{
 char line[LINE_SIZE][LEN_SIZE];
@@ -14,7 +15,7 @@ int in(char* input){
 do{
 fgets(input,LEN_SIZE,stdin);
 //if(strlen(input)<=0)printf("NULL string!\n");
-}while(strlen(input)<=0);
+}while(strlen(input)<=0||input[0]=='/n');
 return strlen(input);
 }
 
@@ -136,18 +137,20 @@ memcpy(filename,argv[1],FILENAME_SIZE);
 printf("%s on edit\n",filename);
 loadtext(&txt,argv[1]);
 char input[LEN_SIZE];
-printf("@h help\n");
+printf("%ch help\n",TOOL_HEADER);
 
 while(1){
 printf("1le$");
 in(input);
 if(DEBUG)printf("START %c\n",input[0]);
 
-if(input[0]!='@'){
+if(input[0]!=TOOL_HEADER){
 insert(&txt,input,-1);
 }
 
-if(input[0]=='@'){
+
+
+if(input[0]==TOOL_HEADER){
  switch(input[1]){
  case'-':
  showtext(&txt);
@@ -190,6 +193,7 @@ if(input[0]=='@'){
 }
 return 0;
 }
+
 
 
 
