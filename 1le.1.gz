@@ -6,7 +6,7 @@
 [file]
 .SH DESCRIPTION
 .I 1le
-is a oneline text editor.
+is a oneline text editor. Everything you type will be written to the data buffer unless it starts with “-“. If the input starts with “-“, it’ll be considered as an option. If you want to write the sentence which starts with “-“, you need to add a backslash at the head.
 .SH OPTIONS
 .TP
 .BI -c
@@ -35,6 +35,14 @@ Save file
 .TP
 .BI -w
 Search word
+.SH RANGE
+Range is a useful expression to select many lines.
+There are four types of range.
+1. One line: this type of range has only one positive integer.  E.g. “1”, “23”
+2. All until: this type of range has only one positive integer after a tilde. E.g. “~4”
+3. Between: this type of range has a tilde between two positive integers. E.g “2~5”
+4. N after: this type of range has ‘N’ between two positive integers. E.g “3N1”
+         “aNb” equals to “a~(a+b-1)”
 .SH ENVIRONMENT
 None
 .SH AUTHORS
