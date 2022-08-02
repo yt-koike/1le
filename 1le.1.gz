@@ -1,0 +1,46 @@
+.TH 1le 1
+.SH NAME
+1le \- a oneline text editor
+.SH SYNOPSIS
+.B 1le
+[file]
+.SH DESCRIPTION
+.I 1le
+is a oneline text editor.
+.SH OPTIONS
+.TP
+.BI -c
+Clears lines
+.TP
+.BI -d
+Deletes lines
+.TP
+.BI -e
+Edits lines
+.TP
+.BI -h
+Shows help
+.TP
+.BI -i
+Inserts lines
+.TP
+.BI -p
+Prints lines
+.TP
+.BI -qx
+Save and exit
+.TP
+.BI -s
+Save file
+.TP
+.BI -w
+Search word
+.SH ENVIRONMENT
+None
+.SH AUTHORS
+yt-koike
+.SH SEE ALSO
+.PP
+github:
+.br
+https://github.com/yt-koike/1le
